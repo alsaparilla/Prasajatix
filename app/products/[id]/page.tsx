@@ -177,3 +177,11 @@ export default function ProductDetailPage() {
     </div>
   );
 }
+
+// ✅ This is required for `output: 'export'` in next.config.js
+export async function generateStaticParams() {
+  const snapshot = await getDocs(collection(db, "product"));
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+  }));
+}
