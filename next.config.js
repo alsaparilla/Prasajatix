@@ -1,6 +1,8 @@
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export", // 🔥 Enables static export
+  reactStrictMode: true,
+  // HAPUS: output: 'export',
 };
 
 module.exports = nextConfig;
