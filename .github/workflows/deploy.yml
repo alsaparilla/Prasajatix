@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: "18" # Updated Node.js version
 
       - name: Install dependencies
         run: npm install
@@ -26,9 +26,11 @@ jobs:
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
-          server: prasajati.com # Corrected to "server"
+          server: prasajati.com
           username: prasajat1
           password: "%Ug?S8:GwR"
-          local-dir: ./out/ # Corrected to "local-dir"
-          server-dir: / # Corrected to "server-dir"
-
+          local-dir: ./out/
+          server-dir: /
+          passive: true # Force passive mode
+          # You can optionally specify a custom port range if required
+          # port: 21
