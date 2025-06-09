@@ -1,56 +1,97 @@
-export default function FAQ() {
-  return (
-    <section id="faq" className="bg-white py-16 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
-          Frequently Asked Questions
-        </h2>
+// components/Faq.tsx
 
-        <div className="space-y-6">
-          {faqData.map((faq, index) => (
-            <details
-              key={index}
-              className="group border border-gray-200 rounded-lg p-5 hover:shadow-md transition"
-            >
-              <summary className="font-semibold text-lg cursor-pointer text-gray-800 group-open:text-green-600">
-                {faq.question}
-              </summary>
-              <p className="text-gray-600 mt-3 leading-relaxed">{faq.answer}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+"use client"; // <-- Add this line at the top
+
+import { useState } from "react";
 
 const faqData = [
   {
     question: "What are night vision devices?",
-    answer: `Night vision goggles are devices that allow users to see in darkness or in difficult conditions of poor visibility (smoke, fog, rain or other disasters).`,
+    answer:
+      "Night vision devices are tools used to see in low light or dark environments by amplifying available light.",
   },
   {
     question: "What is the lifetime of night vision devices?",
-    answer: `The life of a night vision devices depends on its quality, frequency of use, and care. Most quality night vision goggles have optics and electronics that last for several years.`,
+    answer:
+      "The lifetime of night vision devices varies depending on the type, usage, and maintenance, but most last for several years.",
   },
   {
     question: "What are our waterproof test standards?",
-    answer: `The international IP67 waterproof test requires the device to be immersed in 1 meter of water for 30 minutes, but we use a more stringent standard and conduct a 30-minute immersion test at a depth of 2 meters to ensure that the device can work normally in more demanding environments.`,
+    answer:
+      "Our night vision devices undergo rigorous waterproof testing to ensure they function in all weather conditions, with IP67 or higher ratings.",
   },
   {
     question: "How to clean and maintain night vision devices?",
-    answer: `When cleaning night vision devices, use a soft cloth to wipe the lens and avoid using any corrosive chemicals. Avoid humid environments when storing to extend the life of the device.`,
+    answer:
+      "Regular cleaning with a soft cloth and proper storage can extend the life of night vision devices. Always follow the manufacturer’s instructions.",
   },
   {
     question: "What kinds of payment methods do you accept?",
-    answer: `You can make the payment to our bank account: 30% deposit in advance, 70% balance against the copy of B/L.`,
+    answer:
+      "We accept all major credit cards, PayPal, and bank transfers for payment.",
   },
   {
     question: "What is the average lead time?",
-    answer: `For samples, the lead time is about 14 days. For mass production, the lead time is 40–60 days after receiving the deposit payment. The lead times become effective when (1) we have received your deposit, and (2) we have your final approval for your products. If our lead times do not work with your deadline, please go over your requirements with your sale. In all cases we will try to accommodate.`,
+    answer:
+      "The average lead time is between 1-2 weeks, depending on the order size and delivery location.",
   },
   {
     question: "Do you guarantee safe and secure delivery of products?",
-    answer: `Yes, we always use high quality export packaging. We also use specialized hazard packing for dangerous goods and validated cold storage shippers for temperature sensitive items. Specialist packaging and non-standard packing requirements may incur an additional charge.`,
+    answer:
+      "Yes, we offer secure delivery options and ensure all products are shipped with tracking and insurance.",
   },
 ];
+
+const Faq = () => {
+  const [open, setOpen] = useState<number | null>(null);
+
+  const toggleAccordion = (index: number) => {
+    setOpen(open === index ? null : index);
+  };
+
+  return (
+    <div className="container mx-auto px-6 py-12">
+      <h2 className="text-3xl font-semibold mb-6 text-center">
+        {" "}
+        {/* Center the title */}
+        Frequently Asked Questions
+      </h2>
+      <div className="grid grid-cols-1 gap-6">
+        {faqData.map((faq, index) => (
+          <div key={index} className="border p-4 rounded-lg">
+            <button
+              className="w-full text-left text-lg font-semibold focus:outline-none"
+              onClick={() => toggleAccordion(index)}
+            >
+              <div className="flex justify-between items-center">
+                <span>{faq.question}</span>
+                <svg
+                  className={`w-5 h-5 transform transition-transform duration-300 ${
+                    open === index ? "rotate-180" : ""
+                  }`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
+            </button>
+
+            {open === index && (
+              <div className="mt-4 text-gray-700">{faq.answer}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Faq;

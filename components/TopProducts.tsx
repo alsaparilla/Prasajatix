@@ -1,52 +1,75 @@
+"use client"; // Ensure it's a client-side component
+
+import { useEffect, useState } from "react";
+import Link from "next/link"; // Use the Link component directly from Next.js
+
+// Define the structure of the product
 interface Product {
+  id: string;
   name: string;
   category: string;
-  image: string;
+  description: string;
+  images?: string[];
 }
 
-const products: Product[] = [
-  {
-    name: "MultiFunctional Thermal Imager DT-TW21",
-    category: "Thermal Imaging",
-    image: "/MultiFunctional Thermal Imager DT-TW21.webp",
-  },
-  {
-    name: "GPNVG Night Vision Quad Goggles DTG-18F",
-    category: "Night Vision",
-    image: "/GPNVG Night Vision Quad GogglesDTG-18F.webp",
-  },
-  {
-    name: "Night Vision Goggles PVS7 DT-NH9X",
-    category: "Night Vision",
-    image: "/Night Vision Goggles PVS7 DT-NH9X.webp",
-  },
-];
-
 export default function TopProducts() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  // Fetch products data
+  useEffect(() => {
+    fetch("/data/enriched_products_with_categories.json")
+      .then((res) => res.json())
+      .then((data) => {
+        // Shuffle products to get random ones and pick the top 6
+        const shuffledProducts = data.sort(() => Math.random() - 0.5);
+        setProducts(shuffledProducts.slice(0, 6)); // Get 6 random products
+      });
+  }, []);
+
   return (
     <section className="bg-gray-50 py-16 px-4">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-10">Top Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
-          {products.map((product) => (
-            <div
-              key={product.name}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 w-full max-w-xs p-4 flex flex-col items-center"
-            >
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+        {/* Title */}
+        <h2 className="text-3xl font-bold text-gray-800">Top Products</h2>
+
+        {/* Button to navigate to the product list */}
+        <Link
+          href="/products"
+          className="inline-block bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition"
+        >
+          Find More Products
+        </Link>
+      </div>
+
+      {/* Product Grid - 3 columns, 2 rows */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
+        {products.map((product) => (
+          <div
+            key={product.id}
+            className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 w-full p-4 flex flex-col items-center"
+          >
+            {product.images?.[0] && (
               <img
-                src={product.image}
+                src={product.images[0]}
                 alt={product.name}
                 className="w-full h-44 object-contain rounded mb-4"
               />
-              <div className="text-center">
-                <h3 className="text-base font-semibold text-gray-900">
-                  {product.name}
-                </h3>
-                <p className="text-sm text-gray-500 mt-1">{product.category}</p>
-              </div>
+            )}
+            <div className="text-center">
+              <h3 className="text-base font-semibold text-gray-900">
+                {product.name}
+              </h3>
+              <p className="text-sm text-gray-500 mt-1">{product.category}</p>
             </div>
-          ))}
-        </div>
+            {/* View Details Button */}
+            <Link
+              href={`/products/${product.id}`}
+              className="inline-block bg-green-600 text-white px-6 py-3 rounded-md mt-4 hover:bg-green-700 transition"
+            >
+              View Details
+            </Link>
+          </div>
+        ))}
       </div>
     </section>
   );

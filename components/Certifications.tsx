@@ -13,7 +13,7 @@ export default function Certifications() {
             key={n}
             src={`/certification${n}.webp`}
             alt={`Certification ${n}`}
-            className="w-40 h-auto object-contain shadow-md rounded"
+            className="w-72 h-auto object-contain shadow-md rounded" // Increased the width
           />
         ))}
       </div>

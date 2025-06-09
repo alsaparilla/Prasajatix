@@ -1,187 +1,124 @@
-"use client";
+import products from "../../data/enriched_products_with_categories.json";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import {
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
-import { db } from "../../../lib/firebase";
+type Product = {
+  id: string;
+  name: string;
+  description: string;
+  category?: string;
+  images?: string[];
+  features?: string;
+  techSpecs?: { label: string; values: string[] }[];
+};
 
-export default function ProductDetailPage() {
-  const { id } = useParams();
-  const [product, setProduct] = useState<any>(null);
-  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+export async function generateStaticParams() {
+  return (products as Product[]).map((product) => ({
+    id: product.id,
+  }));
+}
 
-  useEffect(() => {
-    async function fetchProduct() {
-      try {
-        const docRef = doc(db, "product", id as string);
-        const docSnap = await getDoc(docRef);
+// Use dynamic params from static generation
+export default function ProductDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const product = products.find((p) => p.id === params.id);
 
-        if (docSnap.exists()) {
-          const productData = docSnap.data();
-          setProduct(productData);
-          fetchRelated(productData.category);
-        } else {
-          setError("Product not found.");
-        }
-      } catch (err) {
-        setError("Failed to load product.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    async function fetchRelated(category: string) {
-      const q = query(
-        collection(db, "product"),
-        where("category", "==", category)
-      );
-      const snapshot = await getDocs(q);
-      const related = snapshot.docs
-        .filter((doc) => doc.id !== id)
-        .map((doc) => ({ id: doc.id, ...doc.data() }));
-      setRelatedProducts(related);
-    }
-
-    if (id) fetchProduct();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div className="text-center text-red-600 mt-8">{error}</div>;
+  if (!product) {
+    return <div>Product not found.</div>;
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      {/* Breadcrumb */}
-      <nav className="text-sm text-gray-500 mb-4">
-        <ol className="list-reset flex">
-          <li>
-            <a href="/" className="text-blue-600 hover:underline">
-              Home
-            </a>
-          </li>
-          <li>
-            <span className="mx-2">/</span>
-          </li>
-          <li>
-            <a href="/products" className="text-blue-600 hover:underline">
-              Products
-            </a>
-          </li>
-          <li>
-            <span className="mx-2">/</span>
-          </li>
-          <li className="text-gray-700">{product.name}</li>
-        </ol>
-      </nav>
-
-      <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-      <p className="text-gray-700 mb-6">{product.description}</p>
-
-      {/* Images */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-        {product.images?.map((url: string, idx: number) => (
-          <img
-            key={idx}
-            src={url}
-            alt={`Image ${idx + 1}`}
-            className="rounded shadow"
-          />
-        ))}
-      </div>
-
-      {/* Features */}
-      <h2 className="text-xl font-semibold mb-2">Product Features</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-        {product.features?.map((url: string, idx: number) => (
-          <img
-            key={idx}
-            src={url}
-            alt={`Feature ${idx + 1}`}
-            className="rounded shadow"
-          />
-        ))}
-      </div>
-
-      {/* Tech Specs */}
-      <h2 className="text-xl font-semibold mb-2">Technical Specifications</h2>
-      <div className="border rounded p-4 bg-gray-50 mb-6">
-        <p className="mb-2">
-          <span className="font-semibold">Features:</span>
-          <br />
-          {product.techSpecs?.features}
-        </p>
-        <p>
-          <span className="font-semibold">Specification:</span>
-          <br />
-          {product.techSpecs?.specification}
-        </p>
-      </div>
-
-      {/* CTA */}
-      <div className="mt-8">
-        <a
-          href="https://wa.me/628123456789"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700"
-        >
-          Inquire via WhatsApp
+    <div className="p-6 font-roboto">
+      {/* Back Navigation and Breadcrumb */}
+      <div className="flex items-center space-x-2 mb-6">
+        <a href="/" className="text-blue-600 text-lg">
+          ←
         </a>
+        <div className="text-gray-600 text-sm">
+          <a href="/" className="hover:text-blue-600">
+            Home
+          </a>{" "}
+          &gt;
+          <a href="/category" className="hover:text-blue-600">
+            {" "}
+            Category
+          </a>{" "}
+          &gt;
+          <span>{product.name}</span>
+        </div>
       </div>
 
-      {/* Related Products */}
-      {relatedProducts.length > 0 && (
-        <div className="mt-12">
-          <h2 className="text-2xl font-semibold mb-4">Related Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {relatedProducts.map((item: any) => (
-              <div
-                key={item.id}
-                className="border rounded p-4 shadow hover:shadow-lg transition"
-              >
-                <img
-                  src={item.images?.[0]}
-                  alt={item.name}
-                  className="w-full h-48 object-cover mb-4"
-                />
-                <h3 className="text-lg font-medium">{item.name}</h3>
-                <p className="text-sm text-gray-600">{item.description}</p>
-                <a
-                  href={`/products/${item.id}`}
-                  className="text-blue-600 hover:underline mt-2 inline-block"
-                >
-                  View Details
-                </a>
-              </div>
-            ))}
+      {/* Product Detail Section */}
+      <div className="flex flex-col md:flex-row gap-12 w-full mb-8">
+        {/* Product Image */}
+        <div className="flex-1 flex justify-center mb-6 md:mb-0">
+          {product.images?.[0] && (
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              className="w-full max-w-[700px] h-auto object-contain rounded-lg shadow-lg"
+            />
+          )}
+        </div>
+
+        {/* Product Information Section */}
+        <div className="flex-2 max-w-xl">
+          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+          {product.description && (
+            <p className="text-lg text-gray-700 mb-6">{product.description}</p>
+          )}
+
+          {/* Product Features */}
+          {product.features && (
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-2">Features</h3>
+              <p className="text-gray-700">{product.features}</p>
+            </div>
+          )}
+
+          {/* Product Tech Specs */}
+          {product.techSpecs && (
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-2">
+                Technical Specifications
+              </h3>
+              <table className="table-auto w-full border-collapse">
+                <tbody>
+                  {product.techSpecs.map((spec, index) => (
+                    <tr key={index}>
+                      <td className="border-b py-2 px-4 text-gray-600 font-medium">
+                        {spec.label}
+                      </td>
+                      <td className="border-b py-2 px-4 text-gray-700">
+                        {spec.values.join(", ")}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Inquiry Buttons */}
+          <div className="flex gap-4 mt-6 justify-center">
+            <a
+              href="mailto:info@prasajati.com"
+              className="bg-blue-600 text-white py-4 px-8 rounded-lg text-center w-full hover:bg-blue-700 transition text-xl"
+            >
+              Email Us
+            </a>
+            <a
+              href="tel:021-22467390"
+              className="bg-green-600 text-white py-4 px-8 rounded-lg text-center w-full hover:bg-green-700 transition text-xl"
+            >
+              Call Us
+            </a>
           </div>
         </div>
-      )}
+      </div>
+
+      {/* Footer Section Removed */}
     </div>
   );
-}
-
-// ✅ This is required for `output: 'export'` in next.config.js
-export async function generateStaticParams() {
-  const snapshot = await getDocs(collection(db, "product"));
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-  }));
 }
