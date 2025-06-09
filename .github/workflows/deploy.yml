@@ -29,6 +29,6 @@ jobs:
           server: ftp://prasajati.com # Corrected to "server"
           username: prasajat1
           password: "%Ug?S8:GwR"
-          local-dir: ./out # Corrected to "local-dir"
+          local-dir: ./out/ # Corrected to "local-dir"
           server-dir: / # Corrected to "server-dir"
 
