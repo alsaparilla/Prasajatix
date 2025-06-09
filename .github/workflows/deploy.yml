@@ -8,7 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -16,7 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: "14"
 
       - name: Install dependencies
         run: npm install
@@ -27,8 +26,9 @@ jobs:
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
-          ftp-server: ftp://prasajati.com
-          ftp-username: prasajat1
-          ftp-password: "%Ug?S8:GwR"
-          local-dir: ./out # Directory to upload, assuming 'out' is your build folder
-          remote-dir: / # Upload to the root directory
+          server: ftp://prasajati.com # Corrected to "server"
+          username: prasajat1
+          password: "%Ug?S8:GwR"
+          local-dir: ./out # Corrected to "local-dir"
+          server-dir: / # Corrected to "server-dir"
+
