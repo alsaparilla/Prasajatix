@@ -28,7 +28,7 @@ jobs:
         run: npm run export
 
       - name: Deploy to FTP (Partial Overwrite)
-        uses: appleboy/ftp-action@v1.0.0
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
           hserver: prasajati.com
           username: prasajat1
