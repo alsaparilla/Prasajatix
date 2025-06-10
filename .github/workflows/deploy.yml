@@ -27,7 +27,7 @@ jobs:
       - name: Deploy to FTP (Partial Overwrite)
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
-          hserver: prasajati.com
+          server: prasajati.com
           username: prasajat1
           password: "%Ug?S8:GwR"
           port: 21
