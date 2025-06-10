@@ -33,4 +33,4 @@ jobs:
           server-dir: /
           passive: true # Force passive mode
           # You can optionally specify a custom port range if required
-          # port: 21
+          port: 21

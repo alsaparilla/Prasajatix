@@ -1,4 +1,4 @@
-import products from "../../data/enriched_products_with_categories.json";
+import products from "../../../public/data/enriched_products_with_categories.json";
 
 type Product = {
   id: string;
