@@ -25,7 +25,7 @@ export default function Hero() {
     slidesToScroll: 1, // Scroll one image at a time
     arrows: true, // Show left and right arrows
     autoplay: true, // Automatically change images
-    autoplaySpeed: 3000, // Change images every 3 seconds
+    autoplaySpeed: 2000, // Change images every 3 seconds
     appendDots: (dots: any) => (
       <div
         style={{

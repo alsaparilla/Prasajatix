@@ -30,23 +30,100 @@ export default function ProductDetailPage({
 
   return (
     <div className="p-6 font-roboto">
-      {/* Back Navigation and Breadcrumb */}
-      <div className="flex items-center space-x-2 mb-6">
-        <a href="/" className="text-blue-600 text-lg">
-          ←
+      {/* Back Button */}
+      <div className="mb-4">
+        <a
+          href="/products"
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors duration-200 group"
+        >
+          <svg
+            className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform duration-200"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          <span className="font-medium">Back to Products</span>
         </a>
-        <div className="text-gray-600 text-sm">
-          <a href="/" className="hover:text-blue-600">
+      </div>
+
+      {/* Beautiful Breadcrumbs */}
+      <div className="mb-8 overflow-x-auto">
+        <nav className="inline-flex items-center space-x-1 bg-gradient-to-r from-blue-50 to-indigo-50 px-3 sm:px-6 py-2 sm:py-3 rounded-full border border-blue-100 shadow-sm min-w-max">
+          <a
+            href="/"
+            className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200 hover:underline text-sm sm:text-base whitespace-nowrap"
+          >
             Home
-          </a>{" "}
-          &gt;
-          <a href="/category" className="hover:text-blue-600">
-            {" "}
-            Category
-          </a>{" "}
-          &gt;
-          <span>{product.name}</span>
-        </div>
+          </a>
+
+          <svg
+            className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400 mx-1 sm:mx-2 flex-shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+
+          <a
+            href="/products"
+            className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200 hover:underline text-sm sm:text-base whitespace-nowrap"
+          >
+            Products
+          </a>
+
+          <svg
+            className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400 mx-1 sm:mx-2 flex-shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+
+          {product.category && (
+            <>
+              <span className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200 text-sm sm:text-base whitespace-nowrap">
+                {product.category}
+              </span>
+
+              <svg
+                className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400 mx-1 sm:mx-2 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </>
+          )}
+
+          <span className="text-gray-700 font-semibold bg-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm shadow-sm whitespace-nowrap max-w-[120px] sm:max-w-none truncate">
+            {product.name}
+          </span>
+        </nav>
       </div>
 
       {/* Product Detail Section */}

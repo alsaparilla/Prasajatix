@@ -45,7 +45,7 @@ export default function Header() {
         {/* Right: Inquire Now button */}
         <div className="hidden md:flex items-center">
           <Link
-            href="#contact"
+            href="/contact"
             className="inline-block bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition"
           >
             Inquire Now
@@ -144,7 +144,7 @@ export default function Header() {
             Contact Us
           </Link>
           <Link
-            href="app/contact"
+            href="/contact"
             className="text-lg font-semibold"
             onClick={toggleMenu}
           >
