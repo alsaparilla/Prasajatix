@@ -25,7 +25,6 @@ jobs:
       - name: Build the project
         run: |
           npm run build
-          npm run export
 
       - name: Deploy to FTP (Clean Deploy)
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
