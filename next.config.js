@@ -5,6 +5,7 @@ const nextConfig = {
   images: {
     unoptimized: true, // Required when using `output: 'export'`
   },
+  trailingSlash: true, // Ensures URLs end with / for static hosting
 };
 
 module.exports = nextConfig;

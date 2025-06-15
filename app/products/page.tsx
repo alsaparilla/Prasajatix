@@ -1,6 +1,7 @@
 "use client"; // Ensure it's a client-side component for useState
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import Footer from "../../components/Footer"; // Import Footer
 
 interface Product {
@@ -98,17 +99,16 @@ export default function ProductListPage() {
             </p>
 
             {/* View Details Button */}
-            <a
-              href={`/products/product-${product.id}.html`}
+            <Link
+              href={`/products/${product.id}/`}
               className="inline-block bg-green-600 text-white px-6 py-3 w-full text-center rounded-md hover:bg-green-700 transition mt-auto"
             >
               View Details
-            </a>
+            </Link>
           </div>
         ))}
       </div>
       {/* Footer Section */}
-      <Footer /> {/* Added Footer Component outside the max-w-5xl container */}
     </div>
   );
 }
