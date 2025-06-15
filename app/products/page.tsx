@@ -100,7 +100,7 @@ export default function ProductListPage() {
 
             {/* View Details Button */}
             <Link
-              href={`/products/${product.id}/`}
+              href={`/products/${product.id}/index.html`}
               className="inline-block bg-green-600 text-white px-6 py-3 w-full text-center rounded-md hover:bg-green-700 transition mt-auto"
             >
               View Details

@@ -17,13 +17,6 @@
       "static/chunks/145-5e3ee2ada656b046.js",
       "static/chunks/app/layout-7dc37f814f740591.js"
     ],
-    "/faq/page": [
-      "static/chunks/webpack-0de6ee1e7a564f12.js",
-      "static/chunks/fd9d1056-87da80e0c187477b.js",
-      "static/chunks/117-5dbd705faada19f5.js",
-      "static/chunks/main-app-df2a2748ef499c1d.js",
-      "static/chunks/app/faq/page-82b85e23e823e236.js"
-    ],
     "/page": [
       "static/chunks/webpack-0de6ee1e7a564f12.js",
       "static/chunks/fd9d1056-87da80e0c187477b.js",
@@ -34,12 +27,12 @@
       "static/chunks/137-81809d32a221b1c4.js",
       "static/chunks/app/page-b44182363c14061a.js"
     ],
-    "/contact/page": [
+    "/about/page": [
       "static/chunks/webpack-0de6ee1e7a564f12.js",
       "static/chunks/fd9d1056-87da80e0c187477b.js",
       "static/chunks/117-5dbd705faada19f5.js",
       "static/chunks/main-app-df2a2748ef499c1d.js",
-      "static/chunks/app/contact/page-b2084141afdf5069.js"
+      "static/chunks/app/about/page-6d916338bba44e9a.js"
     ],
     "/products/page": [
       "static/chunks/webpack-0de6ee1e7a564f12.js",
@@ -47,14 +40,21 @@
       "static/chunks/117-5dbd705faada19f5.js",
       "static/chunks/main-app-df2a2748ef499c1d.js",
       "static/chunks/648-94a10d2e8f72fdd7.js",
-      "static/chunks/app/products/page-93bb1334d5d7da3e.js"
+      "static/chunks/app/products/page-d1b9c37c880bc051.js"
     ],
-    "/about/page": [
+    "/faq/page": [
       "static/chunks/webpack-0de6ee1e7a564f12.js",
       "static/chunks/fd9d1056-87da80e0c187477b.js",
       "static/chunks/117-5dbd705faada19f5.js",
       "static/chunks/main-app-df2a2748ef499c1d.js",
-      "static/chunks/app/about/page-6d916338bba44e9a.js"
+      "static/chunks/app/faq/page-82b85e23e823e236.js"
+    ],
+    "/contact/page": [
+      "static/chunks/webpack-0de6ee1e7a564f12.js",
+      "static/chunks/fd9d1056-87da80e0c187477b.js",
+      "static/chunks/117-5dbd705faada19f5.js",
+      "static/chunks/main-app-df2a2748ef499c1d.js",
+      "static/chunks/app/contact/page-b2084141afdf5069.js"
     ],
     "/products/[id]/page": [
       "static/chunks/webpack-0de6ee1e7a564f12.js",
